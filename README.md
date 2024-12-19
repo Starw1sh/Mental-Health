@@ -1,2 +1,2 @@
 # Mental-Health
-Using video/picture/text data to analyze a student's mental health state.
+复旦大学2024秋思政课题：基于深度学习的特定心理健康状态分析
