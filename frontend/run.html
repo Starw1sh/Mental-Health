@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理健康评估</title>
+</head>
+<body>
+    <h1>心理健康评估</h1>
+    <form id="uploadForm">
+        <input type="file" id="pictureInput" name="picture" accept="image/*"><br>
+        <button type="button" onclick="uploadFile('picture')">上传图片</button><br>
+        <input type="file" id="videoInput" name="video" accept="video/*"><br>
+        <button type="button" onclick="uploadFile('video')">上传视频</button><br>
+        <input type="file" id="textInput" name="text" accept=".txt"><br>
+        <button type="button" onclick="uploadFile('text')">上传文本</button><br>
+    </form>
+    <button onclick="evaluateStatus()">评估状态</button>
+    <div id="result"></div>
+
+    <script>
+        async function uploadFile(fileType) {
+            const formData = new FormData();
+            const input = document.getElementById(fileType + 'Input');
+            formData.append('file', input.files[0]);
+            
+            const response = await fetch(`http://localhost:3000/upload?type=${fileType}`, {
+                method: 'POST',
+                body: formData
+            });
+    
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        async function evaluateStatus() {
+            const response = await fetch('http://localhost:3000/evaluate');
+            const result = await response.json();
+            document.getElementById('result').innerText = result.message;
+        }
+    </script>
+</body>
+</html>
